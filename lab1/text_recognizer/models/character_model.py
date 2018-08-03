@@ -19,9 +19,9 @@ class CharacterModel(Model):
     def predict_on_image(self, image: np.ndarray) -> Tuple[str, float]:
         if image.dtype == np.uint8:
             image = (image / 255).astype(np.float32)
-        # NOTE: integer to character mapping dictionary is self.data.mapping[integer]
-        ##### Your code below (Lab 1)
-
-        ##### Your code above (Lab 1)
+            prediction = self.network.predict(np.expand_dims(image,0), batch_size=1).flatten()
+            i = np.argmax(prediction)
+            predicted_character = self.data.mapping[i]
+            confidence_of_prediction = prediction[i]
         return predicted_character, confidence_of_prediction
 
